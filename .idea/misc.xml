@@ -3,8 +3,10 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/projects/android/pizzahead_first_book/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.44814814814814813" />
         <entry key="..\:/projects/android/pizzahead_first_book/app/src/main/res/layout/activity_main.xml" value="0.540625" />
         <entry key="..\:/projects/android/pizzahead_first_book/app/src/main/res/layout/activity_menu.xml" value="0.540625" />
+        <entry key="..\:/projects/android/pizzahead_first_book/app/src/main/res/layout/activity_order.xml" value="0.365036231884058" />
         <entry key="..\:/projects/android/pizzahead_first_book/app/src/main/res/layout/settings_activity.xml" value="0.5225375626043406" />
         <entry key="..\:/projects/android/pizzahead_first_book/app/src/main/res/menu/menu_main.xml" value="0.5546875" />
         <entry key="..\:/projects/android/pizzahead_first_book/app/src/main/res/xml/root_preferences.xml" value="0.5546875" />

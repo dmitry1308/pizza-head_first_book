@@ -2,4 +2,5 @@
     <string name="app_name">Пицерия</string>
     <string name="action_settings">Настройки</string>
     <string name="action_create_order">Создать заказ</string>
+    <string name="action_share">Отправить</string>
 </resources>
