@@ -2,6 +2,7 @@ package ru.shepin.pizza_head_first_book;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.ActionBar;
 import android.app.Activity;
 import android.os.Bundle;
 
@@ -11,5 +12,8 @@ public class OrderActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_order);
+
+        ActionBar bar = getActionBar();
+        bar.setDisplayHomeAsUpEnabled(true);
     }
 }
