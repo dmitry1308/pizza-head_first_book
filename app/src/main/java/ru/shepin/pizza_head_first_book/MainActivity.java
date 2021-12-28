@@ -2,15 +2,38 @@ package ru.shepin.pizza_head_first_book;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 import android.widget.ShareActionProvider;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 public class MainActivity extends Activity {
     private ShareActionProvider actionProvider;
 
+    private String[] titles;
+    private ListView drawerList;
+
+
+    @Override
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+         titles = getResources().getStringArray(R.array.titles);
+
+        drawerList = (ListView) findViewById(R.id.drawerr);
+
+        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(
+                this,
+                android.R.layout.simple_list_item_activated_1,
+                titles);
+
+        drawerList.setAdapter(arrayAdapter);
+
+        super.onCreate(savedInstanceState);
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

@@ -3,6 +3,22 @@
     <string name="action_settings">Настройки</string>
     <string name="action_create_order">Создать заказ</string>
     <string name="action_share">Отправить</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="top">Топ</string>
+
+    <string-array name="pasta">
+        <item>Болоньезе</item>
+        <item>Лазанья</item>
+    </string-array>
+
+    <string-array name="stores">
+        <item>Кэмбридж</item>
+        <item>Севастополь</item>
+    </string-array>
+
+    <string-array name="titles">
+        <item>Дом</item>
+        <item>Паста</item>
+        <item>Истории</item>
+    </string-array>
+
 </resources>
