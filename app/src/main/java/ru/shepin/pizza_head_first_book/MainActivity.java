@@ -21,7 +21,9 @@ public class MainActivity extends Activity {
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
-         titles = getResources().getStringArray(R.array.titles);
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+        titles = getResources().getStringArray(R.array.titles);
 
         drawerList = (ListView) findViewById(R.id.drawerr);
 
@@ -32,7 +34,6 @@ public class MainActivity extends Activity {
 
         drawerList.setAdapter(arrayAdapter);
 
-        super.onCreate(savedInstanceState);
     }
 
     @Override
