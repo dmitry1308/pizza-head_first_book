@@ -1,19 +1,18 @@
 package ru.shepin.pizza_head_first_book;
 
-import androidx.appcompat.app.AppCompatActivity;
-
-import android.app.ActionBar;
-import android.app.Activity;
 import android.os.Bundle;
 
-public class OrderActivity extends Activity {
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatActivity;
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
+public class OrderActivity extends AppCompatActivity {
+
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_order);
 
-        ActionBar bar = getActionBar();
-        bar.setDisplayHomeAsUpEnabled(true);
+        ActionBar supportActionBar = getSupportActionBar();
+        supportActionBar.setDisplayHomeAsUpEnabled(true);
     }
 }

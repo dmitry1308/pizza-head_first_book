@@ -1,8 +1,5 @@
 package ru.shepin.pizza_head_first_book;
 
-import android.app.Activity;
-import android.app.Fragment;
-import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
@@ -15,13 +12,18 @@ import android.widget.ShareActionProvider;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.view.ActionProvider;
+import androidx.core.view.MenuItemCompat;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 import ru.shepin.pizza_head_first_book.fragment.PastaFragment;
 import ru.shepin.pizza_head_first_book.fragment.StoresFragment;
 import ru.shepin.pizza_head_first_book.fragment.TopFragment;
 
-public class MainActivity extends Activity {
-    private ShareActionProvider actionProvider;
+public class MainActivity extends AppCompatActivity {
+    private ActionProvider actionProvider;
 
     private String[] titles;
     private ListView drawerList;
@@ -49,7 +51,8 @@ public class MainActivity extends Activity {
         getMenuInflater().inflate(R.menu.menu_main, menu);
 
         MenuItem item = menu.findItem(R.id.action_share);
-        actionProvider = (ShareActionProvider) item.getActionProvider();
+
+        actionProvider = MenuItemCompat.getActionProvider(item);
         setIntent("This is exampleText");
 
         return super.onCreateOptionsMenu(menu);
@@ -75,7 +78,7 @@ public class MainActivity extends Activity {
         Intent intent = new Intent(Intent.ACTION_SEND);
         intent.setType("text/plain");
         intent.putExtra(Intent.EXTRA_TEXT, text);
-        actionProvider.setShareIntent(intent);
+        //actionProvider.setShareIntent(intent);
     }
 
 
@@ -99,7 +102,7 @@ public class MainActivity extends Activity {
                     fragment = new TopFragment();
                     break;
             }
-            FragmentTransaction transaction = getFragmentManager().beginTransaction();
+            FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
             transaction.replace(R.id.content_frame, fragment);
             transaction.addToBackStack(null);
             transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
