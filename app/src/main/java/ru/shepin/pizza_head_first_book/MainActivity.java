@@ -8,13 +8,13 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.widget.ShareActionProvider;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.ActionProvider;
 import androidx.core.view.MenuItemCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
@@ -66,7 +66,6 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
                 return true;
             case R.id.action_settings:
-
                 return true;
 
             default:
@@ -85,10 +84,13 @@ public class MainActivity extends AppCompatActivity {
     private class DrawerItemClickListener implements ListView.OnItemClickListener {
         @Override
         public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
-             selectItem(position);
+            selectItem(position);
         }
 
         private void selectItem(int position) {
+            setActionBarTitle(position);
+
+
             Fragment fragment;
 
             switch (position) {
@@ -108,6 +110,20 @@ public class MainActivity extends AppCompatActivity {
             transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
             transaction.commit();
 
+            DrawerLayout drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+            drawerLayout.closeDrawer(drawerList);
+        }
+
+        private void setActionBarTitle(int position) {
+            String title;
+
+            if (position == 0) {
+                title = getResources().getString(R.string.app_name);
+            } else {
+                title = titles[position];
+            }
+
+            getSupportActionBar().setTitle(title);
         }
     }
 
