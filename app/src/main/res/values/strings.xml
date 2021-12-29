@@ -5,6 +5,9 @@
     <string name="action_share">Отправить</string>
     <string name="top">Главная страница</string>
 
+    <string name="open_drawer">Open drawer</string>
+    <string name="close_drawer">Close drawer</string>
+
     <string-array name="pasta">
         <item>Болоньезе</item>
         <item>Лазанья</item>
@@ -20,5 +23,7 @@
         <item>Паста</item>
         <item>Истории</item>
     </string-array>
+
+
 
 </resources>

@@ -12,6 +12,7 @@ import android.widget.ListView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.ActionProvider;
 import androidx.core.view.MenuItemCompat;
@@ -36,11 +37,33 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        ActionBarDrawerToggle drawerToggle = new ActionBarDrawerToggle(
+                this,
+                drawerLayout,
+                R.string.open_drawer,
+                R.string.close_drawer){
+
+            @Override
+            public void onDrawerOpened(View drawerView) {
+                super.onDrawerOpened(drawerView);
+                invalidateOptionsMenu();
+            }
+
+            @Override
+            public void onDrawerClosed(View drawerView) {
+                invalidateOptionsMenu();
+                super.onDrawerClosed(drawerView);
+            }
+        };
+
+
         titles = getResources().getStringArray(R.array.titles);
 
         drawerList = (ListView) findViewById(R.id.drawerr);
 
         drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+        drawerLayout.setDrawerListener(drawerToggle);
 
         ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(
                 this,
@@ -53,6 +76,15 @@ public class MainActivity extends AppCompatActivity {
         if (savedInstanceState == null) {
             selectItem(0);
         }
+    }
+
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        boolean drawerOpen = drawerLayout.isDrawerOpen(drawerList);
+
+        menu.findItem(R.id.action_share).setVisible(!drawerOpen);
+
+        return super.onPrepareOptionsMenu(menu);
     }
 
     @Override
@@ -87,14 +119,6 @@ public class MainActivity extends AppCompatActivity {
         intent.setType("text/plain");
         intent.putExtra(Intent.EXTRA_TEXT, text);
         //actionProvider.setShareIntent(intent);
-    }
-
-
-    private class DrawerItemClickListener implements OnItemClickListener {
-        @Override
-        public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
-            selectItem(position);
-        }
     }
 
     public void selectItem(int position) {
@@ -134,6 +158,13 @@ public class MainActivity extends AppCompatActivity {
         }
 
         getSupportActionBar().setTitle(title);
+    }
+
+    private class DrawerItemClickListener implements OnItemClickListener {
+        @Override
+        public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
+            selectItem(position);
+        }
     }
 
 }
