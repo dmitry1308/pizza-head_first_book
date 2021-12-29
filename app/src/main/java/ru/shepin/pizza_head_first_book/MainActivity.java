@@ -1,6 +1,7 @@
 package ru.shepin.pizza_head_first_book;
 
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -32,17 +33,27 @@ public class MainActivity extends AppCompatActivity {
 
     private DrawerLayout drawerLayout;
 
+    private ActionBarDrawerToggle drawerToggle;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        ActionBarDrawerToggle drawerToggle = new ActionBarDrawerToggle(
+
+
+        titles = getResources().getStringArray(R.array.titles);
+
+        drawerList = (ListView) findViewById(R.id.drawerr);
+
+        drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+        drawerLayout.setDrawerListener(drawerToggle);
+
+        drawerToggle = new ActionBarDrawerToggle(
                 this,
                 drawerLayout,
                 R.string.open_drawer,
-                R.string.close_drawer){
+                R.string.close_drawer) {
 
             @Override
             public void onDrawerOpened(View drawerView) {
@@ -58,13 +69,6 @@ public class MainActivity extends AppCompatActivity {
         };
 
 
-        titles = getResources().getStringArray(R.array.titles);
-
-        drawerList = (ListView) findViewById(R.id.drawerr);
-
-        drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-        drawerLayout.setDrawerListener(drawerToggle);
-
         ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(
                 this,
                 android.R.layout.simple_list_item_activated_1,
@@ -76,6 +80,22 @@ public class MainActivity extends AppCompatActivity {
         if (savedInstanceState == null) {
             selectItem(0);
         }
+
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setHomeButtonEnabled(true);
+    }
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+
+        drawerToggle.onConfigurationChanged(newConfig);
+    }
+
+    @Override
+    protected void onPostCreate(@Nullable Bundle savedInstanceState) {
+        super.onPostCreate(savedInstanceState);
+        drawerToggle.syncState();
     }
 
     @Override
@@ -101,6 +121,10 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        if (drawerToggle.onOptionsItemSelected(item)) {
+            return true;
+        }
+
         switch (item.getItemId()) {
             case R.id.action_create_order:
                 Intent intent = new Intent(this, OrderActivity.class);
@@ -144,7 +168,7 @@ public class MainActivity extends AppCompatActivity {
         transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
         transaction.commit();
 
-        DrawerLayout drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+        drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawerLayout.closeDrawer(drawerList);
     }
 
