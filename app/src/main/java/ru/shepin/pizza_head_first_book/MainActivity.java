@@ -35,6 +35,14 @@ public class MainActivity extends AppCompatActivity {
 
     private ActionBarDrawerToggle drawerToggle;
 
+    private int currentPosition = 0;
+
+    @Override
+    protected void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putInt("position", currentPosition);
+    }
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -69,6 +77,8 @@ public class MainActivity extends AppCompatActivity {
         };
 
 
+
+
         ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(
                 this,
                 android.R.layout.simple_list_item_activated_1,
@@ -77,7 +87,10 @@ public class MainActivity extends AppCompatActivity {
         drawerList.setAdapter(arrayAdapter);
         drawerList.setOnItemClickListener(new DrawerItemClickListener());
 
-        if (savedInstanceState == null) {
+        if (savedInstanceState != null) {
+            int curPosition = savedInstanceState.getInt("position");
+            setActionBarTitle(curPosition);
+        }else {
             selectItem(0);
         }
 
@@ -163,7 +176,7 @@ public class MainActivity extends AppCompatActivity {
                 break;
         }
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.content_frame, fragment);
+        transaction.replace(R.id.content_frame, fragment, "visible_fragment");
         transaction.addToBackStack(null);
         transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
         transaction.commit();
