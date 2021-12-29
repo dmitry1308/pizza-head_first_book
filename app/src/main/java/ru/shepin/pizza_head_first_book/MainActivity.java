@@ -29,6 +29,8 @@ public class MainActivity extends AppCompatActivity {
     private String[] titles;
     private ListView drawerList;
 
+    private DrawerLayout drawerLayout;
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -38,6 +40,8 @@ public class MainActivity extends AppCompatActivity {
 
         drawerList = (ListView) findViewById(R.id.drawerr);
 
+        drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+
         ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(
                 this,
                 android.R.layout.simple_list_item_activated_1,
@@ -45,6 +49,10 @@ public class MainActivity extends AppCompatActivity {
 
         drawerList.setAdapter(arrayAdapter);
         drawerList.setOnItemClickListener(new DrawerItemClickListener());
+
+        if (savedInstanceState == null) {
+            selectItem(0);
+        }
     }
 
     @Override
@@ -87,45 +95,45 @@ public class MainActivity extends AppCompatActivity {
         public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
             selectItem(position);
         }
+    }
 
-        private void selectItem(int position) {
-            setActionBarTitle(position);
+    public void selectItem(int position) {
+        setActionBarTitle(position);
 
 
-            Fragment fragment;
+        Fragment fragment;
 
-            switch (position) {
-                case 1:
-                    fragment = new PastaFragment();
-                    break;
-                case 2:
-                    fragment = new StoresFragment();
-                    break;
-                default:
-                    fragment = new TopFragment();
-                    break;
-            }
-            FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-            transaction.replace(R.id.content_frame, fragment);
-            transaction.addToBackStack(null);
-            transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
-            transaction.commit();
+        switch (position) {
+            case 1:
+                fragment = new PastaFragment();
+                break;
+            case 2:
+                fragment = new StoresFragment();
+                break;
+            default:
+                fragment = new TopFragment();
+                break;
+        }
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.content_frame, fragment);
+        transaction.addToBackStack(null);
+        transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
+        transaction.commit();
 
-            DrawerLayout drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-            drawerLayout.closeDrawer(drawerList);
+        DrawerLayout drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+        drawerLayout.closeDrawer(drawerList);
+    }
+
+    private void setActionBarTitle(int position) {
+        String title;
+
+        if (position == 0) {
+            title = getResources().getString(R.string.app_name);
+        } else {
+            title = titles[position];
         }
 
-        private void setActionBarTitle(int position) {
-            String title;
-
-            if (position == 0) {
-                title = getResources().getString(R.string.app_name);
-            } else {
-                title = titles[position];
-            }
-
-            getSupportActionBar().setTitle(title);
-        }
+        getSupportActionBar().setTitle(title);
     }
 
 }
