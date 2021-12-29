@@ -15,6 +15,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.ShareActionProvider;
 import androidx.core.view.ActionProvider;
 import androidx.core.view.MenuItemCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
@@ -27,7 +28,7 @@ import ru.shepin.pizza_head_first_book.fragment.StoresFragment;
 import ru.shepin.pizza_head_first_book.fragment.TopFragment;
 
 public class MainActivity extends AppCompatActivity {
-    private ActionProvider actionProvider;
+    private ShareActionProvider actionProvider;
 
     private String[] titles;
     private ListView drawerList;
@@ -144,7 +145,7 @@ public class MainActivity extends AppCompatActivity {
 
         MenuItem item = menu.findItem(R.id.action_share);
 
-        actionProvider = MenuItemCompat.getActionProvider(item);
+        actionProvider = (ShareActionProvider) MenuItemCompat.getActionProvider(item);
         setIntent("This is exampleText");
 
         return super.onCreateOptionsMenu(menu);
@@ -173,7 +174,7 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(Intent.ACTION_SEND);
         intent.setType("text/plain");
         intent.putExtra(Intent.EXTRA_TEXT, text);
-        //actionProvider.setShareIntent(intent);
+        actionProvider.setShareIntent(intent);
     }
 
     public void selectItem(int position) {
