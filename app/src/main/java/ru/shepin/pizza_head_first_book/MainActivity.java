@@ -19,6 +19,7 @@ import androidx.core.view.ActionProvider;
 import androidx.core.view.MenuItemCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import ru.shepin.pizza_head_first_book.fragment.PastaFragment;
@@ -96,7 +97,24 @@ public class MainActivity extends AppCompatActivity {
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
-    }
+
+        getSupportFragmentManager().addOnBackStackChangedListener(() -> {
+            FragmentManager fragmentManager = getSupportFragmentManager();
+            Fragment fragment = fragmentManager.findFragmentByTag("visible_fragment");
+            if (fragment instanceof TopFragment) {
+                currentPosition = 0;
+            }
+            if (fragment instanceof PastaFragment) {
+                currentPosition = 1;
+            }
+            if (fragment instanceof StoresFragment) {
+                currentPosition = 2;
+            }
+
+            setActionBarTitle(currentPosition);
+            drawerList.setItemChecked(currentPosition, true);
+        });
+     }
 
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
@@ -161,6 +179,7 @@ public class MainActivity extends AppCompatActivity {
     public void selectItem(int position) {
         setActionBarTitle(position);
 
+        currentPosition = position;
 
         Fragment fragment;
 
