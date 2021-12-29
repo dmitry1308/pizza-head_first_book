@@ -22,9 +22,6 @@ public class StoresFragment extends ListFragment {
         );
 
         setListAdapter(stringArrayAdapter);
-
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_stores, container, false);
-
+        return super.onCreateView(inflater, container, savedInstanceState);
     }
 }
