@@ -1,16 +1,24 @@
 package ru.shepin.pizza_head_first_book;
 
 import android.app.Activity;
+import android.app.Fragment;
+import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.ShareActionProvider;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+
+import ru.shepin.pizza_head_first_book.fragment.PastaFragment;
+import ru.shepin.pizza_head_first_book.fragment.StoresFragment;
+import ru.shepin.pizza_head_first_book.fragment.TopFragment;
 
 public class MainActivity extends Activity {
     private ShareActionProvider actionProvider;
@@ -33,7 +41,7 @@ public class MainActivity extends Activity {
                 titles);
 
         drawerList.setAdapter(arrayAdapter);
-
+        drawerList.setOnItemClickListener(new DrawerItemClickListener());
     }
 
     @Override
@@ -68,6 +76,36 @@ public class MainActivity extends Activity {
         intent.setType("text/plain");
         intent.putExtra(Intent.EXTRA_TEXT, text);
         actionProvider.setShareIntent(intent);
+    }
+
+
+    private class DrawerItemClickListener implements ListView.OnItemClickListener {
+        @Override
+        public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
+             selectItem(position);
+        }
+
+        private void selectItem(int position) {
+            Fragment fragment;
+
+            switch (position) {
+                case 1:
+                    fragment = new PastaFragment();
+                    break;
+                case 2:
+                    fragment = new StoresFragment();
+                    break;
+                default:
+                    fragment = new TopFragment();
+                    break;
+            }
+            FragmentTransaction transaction = getFragmentManager().beginTransaction();
+            transaction.replace(R.id.content_frame, fragment);
+            transaction.addToBackStack(null);
+            transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
+            transaction.commit();
+
+        }
     }
 
 }
