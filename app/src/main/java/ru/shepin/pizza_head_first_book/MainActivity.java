@@ -195,6 +195,7 @@ public class MainActivity extends AppCompatActivity {
                 fragment = new TopFragment();
                 break;
         }
+
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.content_frame, fragment, "visible_fragment");
         transaction.addToBackStack(null);
